@@ -1,14 +1,21 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Posts</h1>
-
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New post", new_post_path %>
+<% @posts.each do |post| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= post.user.name %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= post.created_at.strftime("%d %b, %Y") %></h6>
+      <p class="card-text"><%= post.content %></p>
+      <div class="d-flex justify-content-between">
+        <div>
+          <%= link_to "Show this post", post, class: "btn btn-primary" %>
+        </div>
+        <div>
+          <% if current_user.liked?(post) %>
+            <button class="btn btn-success">Me gusta</button>
+          <% else %>
+            <button class="btn btn-danger">No me gusta</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
